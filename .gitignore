@@ -37,6 +37,7 @@ _testmain.go
 #other
 node_modules/
 tmp/
+exp/
 bower_components/
 .tmp
 .sass-cache
