@@ -1,6 +1,9 @@
 package views
 
-import "html/template"
+import (
+	"html/template"
+	"net/http"
+)
 
 func NewView(layout string, files ...string) *View {
 
@@ -25,4 +28,10 @@ func NewView(layout string, files ...string) *View {
 type View struct {
 	Template *template.Template
 	Layout   string
+}
+
+// Render the view with predefined layout.
+func (v *View) Render(w http.ResponseWriter, data interface{}) error {
+
+	return v.Template.ExecuteTemplate(w, v.Layout, data)
 }
