@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gorilla/mux"
+	"lenslock.com/controllers"
 	"lenslock.com/views"
 	"net/http"
 )
@@ -9,7 +10,6 @@ import (
 var (
 	homeView    *views.View
 	contactView *views.View
-	signupView  *views.View
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
@@ -24,22 +24,18 @@ func contact(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func signup(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html")
-	must(signupView.Render(w, nil))
-
-}
-
 func main() {
 
 	homeView = views.NewView("bootstrap", "views/home.gohtml")
 	contactView = views.NewView("bootstrap", "views/contact.gohtml")
-	signupView = views.NewView("bootstrap", "views/signup.gohtml")
+	usersC := controllers.NewUser()
 
 	router := mux.NewRouter()
-	router.HandleFunc("/", home)
-	router.HandleFunc("/contact", contact)
-	router.HandleFunc("/signup", signup)
+	router.HandleFunc("/", home).Methods("GET")
+	router.HandleFunc("/contact", contact).Methods("GET")
+	router.HandleFunc("/signup", usersC.New).Methods("GET")
+	router.HandleFunc("/signup", usersC.Create).Methods("POST")
+
 	http.ListenAndServe(":3000", router)
 }
 
