@@ -25,6 +25,11 @@ func (u *Users) New(w http.ResponseWriter, r *http.Request) {
 
 // POST /signup
 func (u *Users) Create(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseForm(); err != nil {
+		panic(err)
+	}
 
-	fmt.Fprintln(w, "This is a fake message. Placeholder until database is setup")
+	fmt.Fprintln(w, r.PostForm["email"])
+	fmt.Fprintln(w, r.PostForm["password"])
+
 }
