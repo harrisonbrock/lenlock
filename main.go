@@ -13,15 +13,11 @@ var (
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html")
 	must(homeView.Render(w, nil))
-
 }
 
 func contact(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html")
 	must(contactView.Render(w, nil))
-
 }
 
 func main() {
