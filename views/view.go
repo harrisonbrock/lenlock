@@ -1,6 +1,7 @@
 package views
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 	"path/filepath"
@@ -14,6 +15,9 @@ var (
 
 func NewView(layout string, files ...string) *View {
 
+	addTemplatePath(files)
+	addTemplateExt(files)
+	fmt.Println(files)
 	files = append(files, layoutFiles()...)
 
 	t, err := template.ParseFiles(files...)
