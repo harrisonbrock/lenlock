@@ -8,6 +8,7 @@ import (
 
 var (
 	LayoutDir   = "views/layouts/"
+	TemplateDir = "views/"
 	TemplateExt = ".gohtml"
 )
 
@@ -56,4 +57,18 @@ func (v *View) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func (v *View) Render(w http.ResponseWriter, data interface{}) error {
 	w.Header().Set("Content-Type", "text/html")
 	return v.Template.ExecuteTemplate(w, v.Layout, data)
+}
+
+// add file path to the front of the file
+func addTemplatePath(files []string) {
+	for i, f := range files {
+		files[i] = TemplateDir + f
+	}
+}
+
+// add ext to the end of the file
+func addTemplateExt(files []string) {
+	for i, f := range files {
+		files[i] = f + TemplateExt
+	}
 }
